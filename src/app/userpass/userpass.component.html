@@ -1,0 +1,24 @@
+<h2>Passwords</h2>
+<table>
+  <tr>
+    <th>Application Name</th>
+    <th>Username</th>
+    <th>Password</th>
+    <th>Expiry Date</th>
+    <th>Days to Expiry</th>
+  </tr>
+  <tr *ngFor = "let list of listsForHtml">
+    <td>{{list.applicationName}}</td>
+    <td>{{list.username}}</td>
+    <td>{{list.password}}</td>
+    <td>{{list.expireDate}}</td>
+    <td>{{list.daysToExpiry}}</td>
+    <td>
+      <button>Update</button>
+      <button>Delete</button>
+    </td>
+  </tr>
+</table>
+<div id = "buttons">
+  <button routerLink = "/create">Create New Password</button>
+</div>
