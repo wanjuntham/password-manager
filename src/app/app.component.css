@@ -1,0 +1,8 @@
+.navbar-nav{
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.nav-item{
+    width: 100px;
+}
