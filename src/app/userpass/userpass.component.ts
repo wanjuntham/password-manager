@@ -25,7 +25,16 @@ export class UserpassComponent implements OnInit {
     }
   }
 
+  updateList(listNum){
+    console.log(listNum)
+  }
 
+  deleteList(listNum){
+    if (this.listsForHtml.length == 1)
+      this.listsForHtml.splice(0,1)
+    else
+      this.listsForHtml.splice(listNum-1,1)
+  }
   
 
   deletePassword(){

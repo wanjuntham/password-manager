@@ -1,6 +1,7 @@
 <h2>Passwords</h2>
 <table>
   <tr>
+    <th>ID</th>
     <th>Application Name</th>
     <th>Username</th>
     <th>Password</th>
@@ -8,14 +9,15 @@
     <th>Days to Expiry</th>
   </tr>
   <tr *ngFor = "let list of listsForHtml">
+    <td>{{list.id}}</td>
     <td>{{list.applicationName}}</td>
     <td>{{list.username}}</td>
     <td>{{list.password}}</td>
     <td>{{list.expireDate}}</td>
     <td>{{list.daysToExpiry}}</td>
     <td>
-      <button>Update</button>
-      <button>Delete</button>
+      <button (click)=updateList(list.id)>Update</button>
+      <button (click)="deleteList(list.id)">Delete</button>
     </td>
   </tr>
 </table>

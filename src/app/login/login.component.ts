@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',[Validators.minLength(6),Validators.required]),
   })
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid){
       // this.http.post
       this.loginSuccess = true
+      this.router.navigate(["/"])
     } else {
       this.loginSuccess = false
     }

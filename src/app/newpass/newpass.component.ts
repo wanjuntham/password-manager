@@ -21,8 +21,18 @@ export class NewpassComponent implements OnInit {
   }
 
   onSubmit(){
-    let testtest: string
-    testtest = this.newPasswordForm.controls.date.value
-    console.log(testtest)
+    // below code is to test date month year are parsed and displayed correctly
+    // let submittedDate = this.parseDate(this.newPasswordForm.controls.date.value)
+    // let day = submittedDate.getDate()
+    // let month = submittedDate.getMonth() + 1
+    // let year = submittedDate.getFullYear()
+    // console.log(`${day} + ${month} + ${year}`)
+    
   }
+
+  // parseDate function is to parse html input date to allow use of js date function
+  // parseDate(date){
+  //   let b = date.split(/\D/)
+  //   return new Date(b[0], --b[1],b[2])
+  // } 
 }
