@@ -14,8 +14,10 @@ export class MasterUserService {
   }
 
   register(user){
-    // return this.http.post('apiregister',user)
+    return this.http.post('apiregister',user).pipe()
   }
 
-  delete
+  delete(id){
+    // return this.http.delete('api')
+  }
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
+import { AuthenticationService } from '../authentication.service';
+import { Router } from '@angular/router';
+import { MasterUserService } from '../master-user.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,25 +11,46 @@ import { UserService } from '../user.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  signupSuccess: boolean
+  submitted = false
+  signingUp = false
+  
   signupForm = new FormGroup({
     username: new FormControl('',Validators.required),
-    password: new FormControl('',[Validators.minLength(6),Validators.required]),
-    password2: new FormControl('',[Validators.minLength(6),Validators.required])
+    password: new FormControl('',Validators.required),
+    password2: new FormControl('',Validators.required)
   })
-  constructor(private user: UserService) { }
+  constructor(private auth: AuthenticationService,
+              private router: Router,
+              private masterUser: MasterUserService) {
+                if (this.auth.currentUserValue){
+                  this.router.navigate(['/'])
+                }
+               }
 
   ngOnInit() {
   }
 
+  get credential(){
+    return this.signupForm.controls
+  }
+
   onSubmit(){
-    if (this.signupForm.valid && 
-      this.signupForm.controls.password.value == this.signupForm.controls.password2.value){
-        // this.user.signupPost
-        this.signupSuccess = true
-    } else {
-      this.signupSuccess = false
+    this.submitted = true
+
+    if (this.signupForm.invalid && !this.credential.password.value.equals(this.credential.password2.value)){
+      return
     }
+
+    this.signingUp = true
+    
+    this.masterUser.register(this.signupForm.value)
+    .subscribe(response => {
+      console.log("registration successful")
+      this.router.navigate(['/login'])
+    },
+    error => {
+      this.signingUp = false
+    })
   }
 
 }

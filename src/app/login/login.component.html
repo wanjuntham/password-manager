@@ -3,13 +3,21 @@
         <h2>Login</h2>
         <div>
             <label>Username: </label>
-            <input type="email" formControlName = "username"/>
+            <input type="email" formControlName = "username" [ngClass]="{'is-invalid': submitted && credential.username.errors}"/>
+            <div *ngIf="submitted && credential.username.errors">
+                <div *ngIf="credential.username.errors.required">Username is empty</div>
+            </div>
+            
         </div>
         <div>
             <label>Password: </label>
-            <input type="password" formControlName = "password"/>
+            <input type="password" formControlName = "password" [ngClass]="{'is-invalid': submitted && credential.password.errors}"/>
+            <div *ngIf="submitted && credential.password.errors">
+                <div *ngIf="credential.password.errors.required">Password is empty</div>
+            </div>
+            
         </div>
-        <input type = "submit" value ="Login"/>
-        <input type = "reset" value = "Clear"/>
+        <button type="submit" [disabled]="loading" >Login</button>
+        
     </form>
 </div>

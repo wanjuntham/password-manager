@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -9,26 +9,51 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginSuccess = false
-  loginError = "Login failed, please try again"
+  
+  loggingIn = false
+  loginError : string
+  submitted = false
   loginForm = new FormGroup({
     username: new FormControl('',Validators.required),
-    password: new FormControl('',[Validators.minLength(6),Validators.required]),
+    password: new FormControl('',Validators.required),
   })
 
-  constructor(private http:HttpClient,
-              private router: Router) { }
+  constructor(private router: Router,
+              private auth: AuthenticationService) {
+                if (this.auth.currentUserValue){
+                  this.router.navigate(['/'])
+                }
+              }
 
   ngOnInit() {
   }
 
+  get credential(){
+    return this.loginForm.controls
+  }
+
   onSubmit(){
-    if (this.loginForm.valid){
-      // this.http.post
-      this.loginSuccess = true
-      this.router.navigate(["/"])
-    } else {
-      this.loginSuccess = false
+    this.submitted = true
+
+    if (this.loginForm.invalid){
+      return
     }
+
+    this.loggingIn = true
+    this.auth.login(this.credential.username.value,this.credential.password.value)
+    .subscribe(response => {
+      this.router.navigate(['/'])
+    },
+    error => {
+      debugger
+      this.loginError = "error"
+      this.loggingIn = false
+      
+    })
+    
+    
+    
+    
+    
   }
 }

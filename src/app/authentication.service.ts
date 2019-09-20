@@ -16,6 +16,10 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable()
   }
 
+  public get currentUserValue(){
+    return this.currentUserSubject.value
+  }
+
   login(username,password){
     //return this.http.post('URL',{username,password})
     //.pipe(map(user=> {
@@ -23,6 +27,8 @@ export class AuthenticationService {
     //   this.currentUserSubject.next(user)
     //   return user
     // }))
+    return this.http.post('URL',{username,password})
+    
   }
   
 
